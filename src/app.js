@@ -1,45 +1,19 @@
 const express = require('express');
+const path = require('path');
+
+const productsRouter = require('./routers/products.router');
+const indexRouter = require('./routers/index.router');
 
 const app = express();
-
 const port = 8080;
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../public')));
 
-const ProductManager = require('./ProductManager');
-
-const productManager = new ProductManager('./Products.json');
-
-app.get('/products',async (req, res) => {
-  try {
-    const limit = req.query.limit;
-    const products = await productManager.getProduct();
-
-    if (limit) {
-      console.log(products)
-      res.json(products.slice(0, limit));
-    } else {
-      res.json(products);
-    }
-  } catch (error) {
-    res.json({ error: 'Error al leer los productos.' });
-  }
-});
-
-
-app.get('/products/:pid',async (req, res) => {
-  const productId = parseInt(req.params.pid);
-  try {
-    const product = await productManager.getProductById(productId);
-    if (product) {
-      res.json(product);
-    } else {
-      res.status(404).json({ error: 'Producto no encontrado.' });
-    }
-  } catch (error) {
-    res.json({ error: 'Producto no encontrado.'});
-  }
-});
+app.use('/', indexRouter);
+app.use('/api', productsRouter);
+app.use('/:pid', indexRouter);
 
 app.listen(port, () => {
   console.log(`Servidor Express escuchando en el puerto ${port}`);

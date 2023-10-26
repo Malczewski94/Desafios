@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+// const { v4: uuidV4 } = require('uuid');
 
 class ProductManager {
     constructor(path) {
