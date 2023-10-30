@@ -50,6 +50,7 @@ class ProductManager {
     async getProductById(id) {
         const product = await getJsonFromFile(this.path);
         const getId = product.findIndex((p) => p.id === id);
+        console.log('Buscando producto con id:', id);
         if(getId === -1){
             console.error('No se encontro el producto buscado.');
         }

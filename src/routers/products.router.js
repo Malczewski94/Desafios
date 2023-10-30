@@ -9,7 +9,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 const ProductManager = require('../components/ProductManager/ProductManager.js');
-const productManager = new ProductManager('./Products.json');
+const productManager = new ProductManager('./src/Products.json');
 
 router.get('/products', async (req, res) => {
     try {
@@ -40,5 +40,6 @@ router.get('/products/:pid', async (req, res) => {
     res.json({ error: 'Producto no encontrado.'});
   }
 });
+
 
 module.exports = router;
