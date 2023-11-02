@@ -2,11 +2,11 @@ const express = require('express');
 const ProductManager = require('../components/ProductManager/ProductManager.js');
 const productManager = new ProductManager('./Products.json');
 
-
 const router = express.Router();
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
+
 
 router.post('/', async (req, res) => {
     const { body } = req;

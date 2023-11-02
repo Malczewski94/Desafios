@@ -60,24 +60,20 @@ async updateCart(cartId, productId) {
     const cart = carts.find(cart => cart.id === cartId);
 
     if (cart) {
-        // Verifica si el producto ya existe en el carrito
         const existingProduct = cart.products.find(product => product.id === productId);
         
         if (existingProduct) {
-            // Si el producto ya existe, incrementa la cantidad
             existingProduct.quantity += 1;
         } else {
-            // Si no existe, agrega el producto al carrito con cantidad 1
             cart.products.push({
                 id: productId,
                 quantity: 1,
             });
         }
-        
-        // Guarda la lista actualizada de carritos en el archivo
+    
         await saveJsonInFile(this.path, carts);
 
-        return cart; // Devuelve el carrito actualizado
+        return cart;
     } else {
         throw new Error('Carrito no encontrado.');
     }
